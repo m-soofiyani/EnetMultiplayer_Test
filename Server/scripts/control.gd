@@ -24,6 +24,8 @@ func on_peer_connected(id):
 	ConnectedPlayers.append(id)
 	if ConnectedPlayers.size() == 2:
 		var _ids = [ConnectedPlayers[0] , ConnectedPlayers[1]]
+		for i in _ids:
+			get_ids.rpc_id(i , _ids)
 		spawn_world.call_deferred(_ids)
 
 func on_peer_disconnected(id):
@@ -39,3 +41,7 @@ func spawn_world(ids : Array):
 	var world = preload("res://scenes/world.tscn").instantiate()
 	$Matches.add_child(world , true)
 	world.PlayersIds = ids
+
+@rpc("authority")
+func get_ids(ids):
+	pass

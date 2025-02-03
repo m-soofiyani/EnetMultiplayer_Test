@@ -1,5 +1,8 @@
 extends Control
 
+
+var playerIds =  []
+
 #var connectionNode : EnetConnection
 #
 ## Called when the node enters the scene tree for the first time.
@@ -14,7 +17,11 @@ func _process(delta: float) -> void:
 	get_node("Label").text = get_node("connection").message
 
 
-#@rpc("authority")
-#func spawn_world():
-	#var world = preload("res://scenes/world.tscn").instantiate()
-	#$root.add_child(world , true)
+@rpc("authority")
+func get_ids(ids):
+	playerIds = ids
+	print(ids)
+	for i in range(ids.size()):
+		if ids[i] == multiplayer.get_unique_id():
+			Singelton.myIndex = i
+	
