@@ -1825,49 +1825,41 @@ mesh = SubResource("ArrayMesh_nba0d")
 skin = SubResource("Skin_g7tg3")
 
 [node name="Object_38" type="MeshInstance3D" parent="3dmodel/Object_5/Skeleton3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 material_override = ExtResource("2_2naak")
 mesh = SubResource("ArrayMesh_avdgi")
 skin = SubResource("Skin_g7tg3")
 
 [node name="Object_40" type="MeshInstance3D" parent="3dmodel/Object_5/Skeleton3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 material_override = ExtResource("2_2naak")
 mesh = SubResource("ArrayMesh_6yh3x")
 skin = SubResource("Skin_g7tg3")
 
 [node name="Object_42" type="MeshInstance3D" parent="3dmodel/Object_5/Skeleton3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 material_override = ExtResource("2_2naak")
 mesh = SubResource("ArrayMesh_tk5bk")
 skin = SubResource("Skin_g7tg3")
 
 [node name="Object_44" type="MeshInstance3D" parent="3dmodel/Object_5/Skeleton3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 material_override = ExtResource("2_2naak")
 mesh = SubResource("ArrayMesh_pdj07")
 skin = SubResource("Skin_g7tg3")
 
 [node name="Object_45" type="MeshInstance3D" parent="3dmodel/Object_5/Skeleton3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 material_override = ExtResource("2_2naak")
 mesh = SubResource("ArrayMesh_qlmtq")
 skin = SubResource("Skin_g7tg3")
 
 [node name="Object_47" type="MeshInstance3D" parent="3dmodel/Object_5/Skeleton3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 material_override = ExtResource("2_2naak")
 mesh = SubResource("ArrayMesh_hoa3y")
 skin = SubResource("Skin_g7tg3")
 
 [node name="Object_48" type="MeshInstance3D" parent="3dmodel/Object_5/Skeleton3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 material_override = ExtResource("2_2naak")
 mesh = SubResource("ArrayMesh_lydh1")
 skin = SubResource("Skin_g7tg3")
 
 [node name="Object_49" type="MeshInstance3D" parent="3dmodel/Object_5/Skeleton3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 material_override = ExtResource("2_2naak")
 mesh = SubResource("ArrayMesh_exh7b")
 skin = SubResource("Skin_g7tg3")
