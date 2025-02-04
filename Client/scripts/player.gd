@@ -74,7 +74,7 @@ func _process(delta: float) -> void:
 	if is_me:
 		get_parent().get_node("Camera3D").playerTarget = position
 		Velocity = Vector3(get_parent().get_node("JoyStick").joy_direction.x , 0 ,get_parent().get_node("JoyStick").joy_direction.y)
-		move_and_collide(Velocity.normalized() * .01)
+		move_and_collide(Velocity.normalized() * delta * 2)
 
 		if position != Velocity +  position:
 			Target = Velocity +  position

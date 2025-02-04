@@ -1591,6 +1591,8 @@ _data = {
 }
 
 [node name="player" type="CharacterBody3D"]
+motion_mode = 1
+wall_min_slide_angle = 1.09083
 script = ExtResource("1_fx6y5")
 clothMaterials = Array[StandardMaterial3D]([ExtResource("2_2naak"), ExtResource("2_icluf")])
 
