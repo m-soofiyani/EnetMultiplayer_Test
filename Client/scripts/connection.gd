@@ -2,7 +2,7 @@ extends Control
 class_name EnetConnection
 
 
-const Server_IP := "localhost"
+const Server_IP := "85.9.104.48"
 const Port := 8085
 var peer : ENetMultiplayerPeer
 var peer_id : int
