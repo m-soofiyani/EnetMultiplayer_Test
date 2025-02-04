@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://scripts/world.gd" id="1_p5h3u"]
 
-[node name="World" type="Node2D"]
+[node name="World" type="Node3D"]
 script = ExtResource("1_p5h3u")
 
 [node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]

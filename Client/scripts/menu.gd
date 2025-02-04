@@ -1,4 +1,4 @@
-extends Control
+extends Node3D
 
 
 var playerIds =  []

@@ -1,7 +1,8 @@
-extends Node2D
+extends Node3D
 
-var sp_positions = [Vector2(100 , 512) , Vector2(2460 , 512)]
+var sp_positions = [Vector3(100 , 512,0) , Vector3(2460 , 512,0)]
 var PlayersIds : Array
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	for id in multiplayer.get_peers():
@@ -12,6 +13,4 @@ func _ready() -> void:
 		#spawn_pose.rpc_id(id , sp_positions[index])
 		add_child(_p)
 		
-#@rpc("authority")
-#func spawn_pose(pos):
-	#pass
+		

@@ -1,4 +1,4 @@
-extends Control
+extends Node3D
 
 const Port := 8085
 var server_peer : ENetMultiplayerPeer

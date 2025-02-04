@@ -1,13 +1,13 @@
-extends Node2D
-
+extends Node3D
 var playerids = []
-func _ready() -> void:
-	pass
-	#if self.get_children().size() > 1:
-		#for player in self.get_children():
-			#if player.name.begins_with("Player"):
-				#var splitted_name =  player.name.split("_" , true , 1)
-				#var digits = int(splitted_name[1])
-				#playerids.append(digits)
-				
+
+
+
+@rpc("authority")
+func spawn_pose(_sync_interval):
+	if self.get_child_count() > 0:
+		for child in self.get_children():
+			if child.name.begins_with("Player"):
+				child.sync_interval = _sync_interval
 	
+	print(_sync_interval)

@@ -1,32 +1,11 @@
-[gd_scene load_steps=3 format=3 uid="uid://bccut6gddcle1"]
+[gd_scene load_steps=2 format=3 uid="uid://bccut6gddcle1"]
 
 [ext_resource type="Script" path="res://scripts/menu.gd" id="1_kxtcx"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1vcpb"]
-bg_color = Color(0.846927, 0.825249, 0.947528, 1)
-
-[node name="Menu" type="Control"]
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-size_flags_horizontal = 6
-size_flags_vertical = 3
+[node name="Menu" type="Node3D"]
 script = ExtResource("1_kxtcx")
 
-[node name="Panel" type="Panel" parent="."]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_1vcpb")
-
 [node name="Label" type="Label" parent="."]
-layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.3
 anchor_top = 0.3
@@ -37,8 +16,9 @@ grow_vertical = 2
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Matches" type="Node2D" parent="."]
+[node name="Matches" type="Node3D" parent="."]
 
 [node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
 _spawnable_scenes = PackedStringArray("res://scenes/world.tscn")
 spawn_path = NodePath("../Matches")
+spawn_limit = 1
