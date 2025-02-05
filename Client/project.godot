@@ -13,7 +13,6 @@ config_version=5
 config/name="Client"
 run/main_scene="res://scenes/menu.tscn"
 config/features=PackedStringArray("4.3", "Mobile")
-config/icon="res://icon.svg"
 
 [autoload]
 
@@ -23,7 +22,6 @@ Singelton="*res://scripts/Singelton.gd"
 
 window/size/viewport_width=2560
 window/size/viewport_height=1080
-window/size/mode=3
 window/stretch/mode="viewport"
 
 [input_devices]

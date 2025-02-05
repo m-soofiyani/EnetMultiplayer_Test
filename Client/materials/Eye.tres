@@ -1,0 +1,6 @@
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://dyy6fi506yfd7"]
+
+[ext_resource type="Texture2D" uid="uid://b73wm3rt2uwky" path="res://3dmodels/textures/Cartoon_Eye_Blue_BaseColor.jpg" id="1_ifrqd"]
+
+[resource]
+albedo_texture = ExtResource("1_ifrqd")

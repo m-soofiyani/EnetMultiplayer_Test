@@ -11,7 +11,7 @@ var message : String
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	peer = ENetMultiplayerPeer.new()
-	var err = peer.create_client(Server_IP , Port)
+	var err = peer.create_client("localhost" , Port)
 	if err != OK:
 		message = "An error accured " + str(err)
 	
