@@ -6,7 +6,7 @@ const Server_IP := "85.9.104.48"
 const Port := 8085
 var peer : ENetMultiplayerPeer
 var peer_id : int
-
+signal connectedToServer
 var message : String
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -30,6 +30,7 @@ func on_connected_to_server() -> void:
 	message = "Connected to server with id : " + str(multiplayer.get_unique_id())
 	peer_id = multiplayer.get_unique_id()
 	Singelton.PeerId = multiplayer.get_unique_id()
+	connectedToServer.emit()
 	
 
 func on_connection_failed() -> void:

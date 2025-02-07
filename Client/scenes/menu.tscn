@@ -2,10 +2,19 @@
 
 [ext_resource type="Script" path="res://scripts/menu.gd" id="1_kxtcx"]
 
-[node name="Menu" type="Node3D"]
+[node name="Menu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 script = ExtResource("1_kxtcx")
 
-[node name="Label" type="Label" parent="."]
+[node name="VBoxContainer" type="VBoxContainer" parent="." groups=["UI"]]
+layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.3
 anchor_top = 0.3
@@ -13,12 +22,29 @@ anchor_right = 0.7
 anchor_bottom = 0.7
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="Label" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_font_sizes/font_size = 100
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="LineEdit" type="LineEdit" parent="VBoxContainer"]
+visible = false
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_font_sizes/font_size = 100
+placeholder_text = "Your Name"
+alignment = 1
+
+[node name="Button" type="Button" parent="VBoxContainer"]
+visible = false
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_font_sizes/font_size = 100
+text = "Ready"
+
 [node name="Matches" type="Node3D" parent="."]
 
-[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
-_spawnable_scenes = PackedStringArray("res://scenes/world.tscn")
-spawn_path = NodePath("../Matches")
-spawn_limit = 1
+[connection signal="button_up" from="VBoxContainer/Button" to="." method="_on_button_button_up"]

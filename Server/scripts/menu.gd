@@ -1,9 +1,10 @@
-extends Node3D
+extends Control
 
 const Port := 8085
 var server_peer : ENetMultiplayerPeer
 var ConnectedPlayers = []
 signal playerDisconnect
+var ReadyForMatchIds : Array
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	
@@ -18,25 +19,25 @@ func _ready() -> void:
 		
 	print("Server is Running With ID : " + str(multiplayer.get_unique_id()))
 
-
+func _process(delta: float) -> void:
+	pass
+		
+		
 func on_peer_connected(id):
 	print("New peer connected with id : %s" %id)
 	ConnectedPlayers.append(id)
-	if ConnectedPlayers.size() == 2:
-		var _ids = [ConnectedPlayers[0] , ConnectedPlayers[1]]
-		for i in _ids:
-			get_ids.rpc_id(i , _ids)
-		spawn_world.call_deferred(_ids)
+
 
 func on_peer_disconnected(id):
 	print("Peer with id : %s disconnected " %id)
 	ConnectedPlayers.erase(id)
+	ReadyForMatchIds.erase(id)
 	playerDisconnect.emit()
 	for _world in $Matches.get_children():
 		if _world.PlayersIds.has(id):
 			_world.queue_free()
 
-
+@rpc("authority")
 func spawn_world(ids : Array):
 	var world = preload("res://scenes/world.tscn").instantiate()
 	$Matches.add_child(world , true)
@@ -45,3 +46,17 @@ func spawn_world(ids : Array):
 @rpc("authority")
 func get_ids(ids):
 	pass
+@rpc("any_peer")
+func On_Ready_For_Match():
+	ReadyForMatchIds.append(multiplayer.get_remote_sender_id())
+	if ReadyForMatchIds.size() == 2:
+		var _ids = [ReadyForMatchIds[0] , ReadyForMatchIds[1]]
+		
+		var world = preload("res://scenes/world.tscn").instantiate()
+		$Matches.add_child(world , true)
+		world.PlayersIds = _ids
+		for id in _ids:
+			get_ids.rpc_id(id , _ids)
+			spawn_world.rpc_id(id , _ids)
+			
+		ReadyForMatchIds.clear()	

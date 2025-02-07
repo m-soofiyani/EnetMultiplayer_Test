@@ -1,0 +1,27 @@
+classDiagram
+	class 3dcharacter
+	3dcharacter <|-- Player.Glb
+	class Arena_map_4
+	class Connection
+	Connection: +on_connected_to_server()
+	Connection: +on_connection_failed()
+	Connection: +on_server_disconnected()
+	Connection: +on_peer_connected()
+	Connection: +on_peer_disconnected()
+	class JoyStick
+	class KixMax
+	class Menu
+	Menu: +get_ids()
+	class Platform
+	class Player
+	Player: +Target
+	Player: +sync_positions_and_target()
+	Player: +sync_anim()
+	Player: +sync_other_player_position_target()
+	Player: +sync_other_anim()
+	Player: +on_position_changed()
+	Player: +on_anim_changed()
+	class World
+	World: +spawn_pose()
+	World <|-- JoyStick
+	World <|-- Platform

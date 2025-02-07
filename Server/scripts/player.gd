@@ -1,6 +1,8 @@
 extends Node3D
 
 
+
+
 @rpc("any_peer")
 func sync_positions_and_target(pos , target):
 	for id in multiplayer.get_peers():
