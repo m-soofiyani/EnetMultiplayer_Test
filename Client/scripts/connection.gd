@@ -2,7 +2,7 @@ extends Control
 class_name EnetConnection
 
 
-const Server_IP := "85.9.104.48"
+const Server_IP := "85.9.104.56"
 const Port := 8085
 var peer : ENetMultiplayerPeer
 var peer_id : int
@@ -11,7 +11,7 @@ var message : String
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	peer = ENetMultiplayerPeer.new()
-	var err = peer.create_client("localhost" , Port)
+	var err = peer.create_client(Server_IP , Port)
 	if err != OK:
 		message = "An error accured " + str(err)
 	
