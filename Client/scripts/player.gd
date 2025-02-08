@@ -20,6 +20,7 @@ var is_me : bool
 var current_pos : Vector3
 var previous_pos : Vector3
 var direction : Vector3
+var Speed := 180
 
 signal position_changed
 signal anim_changed
@@ -37,7 +38,7 @@ func _ready() -> void:
 	position_changed.connect(on_position_changed)
 	anim_changed.connect(on_anim_changed)
 	
-	
+	get_parent().get_node("BulletJoyStick").fire.connect(on_fire)
 
 	
 	var splitted_name =  name.split("_" , true , 1)
@@ -46,10 +47,6 @@ func _ready() -> void:
 	
 	
 	
-	#if is_me:
-		#$"3dmodel/Object_5/Skeleton3D/cloth".material_override = clothMaterials[0]
-	#else :
-		#$"3dmodel/Object_5/Skeleton3D/cloth".material_override = clothMaterials[1]
 		
 	for player in get_parent().get_children():
 		if player.name.begins_with("player"):
@@ -64,19 +61,15 @@ func _process(delta: float) -> void:
 	
 	if is_me:
 		get_parent().get_node("Camera3D").playerTarget = position
-		velocity = (Vector3(get_parent().get_node("JoyStick").joy_direction.x ,-_gravityForce,get_parent().get_node("JoyStick").joy_direction.y)) * delta*60
+		velocity = (Vector3(get_parent().get_node("JoyStick").joy_direction.x ,-_gravityForce,get_parent().get_node("JoyStick").joy_direction.y)) * delta * Speed
 		
 		#
-		#if velocity.length() > 0:
-			#velocity.normalized()
-			#var _rotation = velocity.angle_to(Vector3.FORWARD)
-			#rotation_degrees.y = rad_to_deg(_rotation)
-		#Target =  global_transform.origin + velocity
+
 		if velocity.length() > 0:
 			move_and_slide()
 			if Target != global_transform.origin:
 				Target =  global_transform.origin + velocity
-				look_at(Target , Vector3.UP , true)
+				look_at_direction(velocity)
 		
 		if velocity.length() > 0:
 			if current_anim != anims[1]:
@@ -118,8 +111,9 @@ func sync_anim(anim):
 func sync_other_player_position_target(pos , target):
 	if !is_me:
 		position = pos
-		if position != target:
-			look_at_from_position(position ,target , Vector3.UP , true)
+		
+		look_at_direction(target - position)
+			
 			
 
 @rpc("authority")
@@ -152,20 +146,6 @@ func set_color(color):
 			
 #
 #
-#@rpc("authority")
-#func your_enemy_color(color):
-	#if is_me:
-		#for player in get_parent().get_children():
-			#if player.name.begins_with("Player"):
-				#if !player.is_me:
-					#player.current_color = color
-						#
-					#player.get_node("KixMax/Rig/Skeleton3D/RETOPO_MODIF").material_override = preload("res://materials/KixMax2.tres")
-					##player.get_node("KixMax/Rig/Skeleton3D/Lid_l").material_override = preload("res://materials/KixMax2.tres")
-					##player.get_node("$KixMax/Rig/Skeleton3D/Lid_r").material_override = preload("res://materials/KixMax2.tres")
-					#
-					#if current_color != Color.BLACK:
-						#player.get_node("KixMax/Rig/Skeleton3D/RETOPO_MODIF").material_override.albedo_color = current_color
 func set_index(index):
 	
 	thisPlayerIndex = index
@@ -175,3 +155,45 @@ func set_index(index):
 	
 func on_position_spawn():
 	position = sp_positions[thisPlayerIndex]
+
+
+func look_at_direction(direction : Vector3):
+	var up = Vector3(0, 1, 0)
+	
+	direction = direction.normalized()
+	if global_transform.origin + direction == global_transform.origin:
+		return
+	if direction.cross(up).length() < 0.0001:
+		return
+		
+	look_at(global_transform.origin + direction , up , true)
+	
+
+func on_fire(direction):
+	if is_me:
+		var bullet = preload("res://scenes/gr_bullet.tscn").instantiate()
+		bullet.position = $KixMax/bulletspawn.global_transform.origin
+		bullet.whoFired_id = Singelton.PeerId
+		bullet.VELOCITY = Vector3(direction.x , 0 , direction.y)
+		get_parent().add_child(bullet , true)
+		look_at_direction(bullet.VELOCITY)
+		send_fire_info.rpc_id(1 , bullet.VELOCITY , bullet.this_bullet_material_index, Singelton.PeerId , bullet.name)
+
+
+@rpc("any_peer")
+func send_fire_info(direction, materialindex , whofiredId , bulletname):
+	pass
+
+
+@rpc("authority")
+func get_fire_info(direction, materialindex , whofiredId):
+	if !is_me:
+		var bullet = preload("res://scenes/gr_bullet.tscn").instantiate()
+		bullet.position = $KixMax/bulletspawn.global_transform.origin
+		bullet.sleeping = true
+		bullet.whoFired_id = whofiredId
+		bullet.VELOCITY = Vector3(direction.x , 0 , direction.y)
+		bullet.this_bullet_material_index = materialindex
+		get_parent().add_child(bullet , true)
+		look_at_direction(direction)
+		

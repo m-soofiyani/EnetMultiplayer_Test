@@ -1,4 +1,23 @@
-[gd_resource type="AnimationNodeStateMachine" load_steps=6 format=3 uid="uid://vxov6yt8x6jx"]
+[gd_resource type="AnimationNodeStateMachine" load_steps=10 format=3 uid="uid://vxov6yt8x6jx"]
+
+[sub_resource type="AnimationNodeAdd2" id="AnimationNodeAdd2_g545y"]
+filters = ["Rig/Skeleton3D:Bone", "Rig/Skeleton3D:Hip", "Rig/Skeleton3D:foot.IK.l", "Rig/Skeleton3D:foot.IK.r", "Rig/Skeleton3D:pole.leg.l", "Rig/Skeleton3D:pole.leg.r"]
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_vhi5p"]
+animation = &"Idle"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_kiyis"]
+animation = &"HeadShake"
+
+[sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_w018d"]
+graph_offset = Vector2(-588.7, 88.1)
+nodes/Add2/node = SubResource("AnimationNodeAdd2_g545y")
+nodes/Add2/position = Vector2(140, 160)
+nodes/Animation/node = SubResource("AnimationNodeAnimation_kiyis")
+nodes/Animation/position = Vector2(-80, 80)
+"nodes/Animation 2/node" = SubResource("AnimationNodeAnimation_vhi5p")
+"nodes/Animation 2/position" = Vector2(-80, 220)
+node_connections = [&"Add2", 0, &"Animation", &"Add2", 1, &"Animation 2", &"output", 0, &"Add2"]
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_u6q3o"]
 animation = &"Idle"
@@ -16,8 +35,11 @@ xfade_time = 0.1
 xfade_time = 0.1
 
 [resource]
+states/Fire/node = SubResource("AnimationNodeBlendTree_w018d")
+states/Fire/position = Vector2(743, 221)
 states/Idle/node = SubResource("AnimationNodeAnimation_u6q3o")
 states/Idle/position = Vector2(507, 193)
 states/Run/node = SubResource("AnimationNodeAnimation_gml0j")
 states/Run/position = Vector2(538, 85)
 transitions = ["Start", "Idle", SubResource("AnimationNodeStateMachineTransition_cujb0"), "Idle", "Run", SubResource("AnimationNodeStateMachineTransition_lcgyc"), "Run", "Idle", SubResource("AnimationNodeStateMachineTransition_aqt32")]
+graph_offset = Vector2(52, 68)

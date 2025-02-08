@@ -17,10 +17,14 @@ script = ExtResource("1_p5ysw")
 [node name="JoyStick" parent="." instance=ExtResource("2_i67nn")]
 position = Vector2(339, 815)
 
+[node name="BulletJoyStick" parent="." instance=ExtResource("2_i67nn")]
+position = Vector2(2234, 815)
+LeftOrRight = 1
+
 [node name="platform" parent="." instance=ExtResource("3_prifp")]
 transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, -0.145, 0)
 
-[node name="Camera3D" type="Camera3D" parent="."]
+[node name="Camera3D" type="Camera3D" parent="." groups=["Camera"]]
 transform = Transform3D(1, 0, 0, 0, 0.601815, 0.798635, 0, -0.798635, 0.601815, 0, 4.04003, 4.43346)
 current = true
 fov = 42.3

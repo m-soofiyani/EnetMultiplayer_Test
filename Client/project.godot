@@ -27,6 +27,8 @@ window/stretch/mode="viewport"
 [global_group]
 
 UI=""
+Camera=""
+Players=""
 
 [input_devices]
 

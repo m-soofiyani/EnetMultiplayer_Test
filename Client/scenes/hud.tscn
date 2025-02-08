@@ -1,0 +1,46 @@
+[gd_scene load_steps=3 format=3 uid="uid://btvm4ool5owsa"]
+
+[ext_resource type="Script" path="res://scripts/hud.gd" id="1_6we8o"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lbcs3"]
+bg_color = Color(0.40179, 0.69101, 0.0779885, 1)
+
+[node name="HUD" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_6we8o")
+
+[node name="Player" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -56.0
+offset_top = -85.0
+offset_right = -56.0
+offset_bottom = -85.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.675, 0.675)
+
+[node name="Name" type="Label" parent="Player"]
+layout_mode = 0
+offset_top = -103.0
+offset_right = 179.0
+offset_bottom = -34.0
+theme_override_font_sizes/font_size = 50
+text = "Player1"
+
+[node name="ProgressBar" type="ProgressBar" parent="Player"]
+layout_mode = 1
+offset_left = -7.0
+offset_top = -28.0
+offset_right = 188.0
+offset_bottom = -1.0
+theme_override_styles/fill = SubResource("StyleBoxFlat_lbcs3")
+value = 63.04
+rounded = true

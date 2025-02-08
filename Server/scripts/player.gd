@@ -26,3 +26,18 @@ func sync_other_player_position_target(pos , target ):
 func sync_other_anim(anim):
 	pass
 		
+
+
+@rpc("authority")
+func get_fire_info(direction, materialindex , whofiredId):
+	pass
+
+@rpc("any_peer")
+func send_fire_info(direction, materialindex , whofiredId , bulletname):
+	var bullet = preload("res://scenes/gr_bullet.tscn").instantiate()
+	bullet.name = bulletname
+	get_parent().add_child(bullet , true)
+	
+	for id in multiplayer.get_peers():
+		if id!= multiplayer.get_remote_sender_id():
+			get_fire_info.rpc_id(id , direction , materialindex , whofiredId)

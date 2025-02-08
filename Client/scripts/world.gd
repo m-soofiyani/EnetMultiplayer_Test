@@ -2,6 +2,7 @@ extends Node3D
 var playerids = []
 var PlayersColors : Array
 
+
 func _ready() -> void:
 	for ui in get_tree().get_nodes_in_group("UI"):
 		ui.hide()
@@ -34,4 +35,7 @@ func spawn_players():
 		_p.set_color(PlayersColors[playerids.find(id)])
 		
 		add_child(_p , true)
+		var hud = preload("res://scenes/hud.tscn").instantiate()
+		hud.playernodename = _p.name
+		_p.add_child(hud , true)
 		index += 1

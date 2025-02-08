@@ -1,0 +1,34 @@
+[gd_scene load_steps=7 format=3 uid="uid://r5tdxfrhivha"]
+
+[ext_resource type="Material" uid="uid://dwnheydvk24qx" path="res://materials/Granools/granool.tres" id="1_ln0op"]
+[ext_resource type="Script" path="res://scripts/gr_bullet.gd" id="1_s5w54"]
+[ext_resource type="Material" uid="uid://dvuaydgecbfsf" path="res://materials/Granools/granool2.tres" id="2_85b1g"]
+[ext_resource type="Material" uid="uid://bfpkqms3emtrb" path="res://materials/Granools/granool3.tres" id="3_3o3n6"]
+[ext_resource type="Material" uid="uid://b7ha8gh806agx" path="res://materials/Granools/granool4.tres" id="4_y1s1c"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_13du5"]
+radius = 0.0436862
+
+[node name="GR_Bullet" type="RigidBody3D"]
+gravity_scale = 0.0
+script = ExtResource("1_s5w54")
+materials = Array[StandardMaterial3D]([ExtResource("2_85b1g"), ExtResource("3_3o3n6"), ExtResource("4_y1s1c"), ExtResource("1_ln0op")])
+
+[node name="CSGSphere3D" type="CSGSphere3D" parent="."]
+material_override = ExtResource("1_ln0op")
+use_collision = true
+radius = 0.0421871
+
+[node name="CSGSphere3D2" type="CSGSphere3D" parent="."]
+material_override = ExtResource("1_ln0op")
+use_collision = true
+radius = 0.0421871
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_13du5")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 5.0
+autostart = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
