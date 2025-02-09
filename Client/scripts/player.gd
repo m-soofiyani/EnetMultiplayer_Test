@@ -2,13 +2,14 @@ extends CharacterBody3D
 
 @export var thisPlayerIndex : int
 
-
+var health := 3000
+var username : String
 var sync_interval := 1
-var sp_positions = [Vector3(-2 ,0,0) , Vector3(2 ,0,0)]
+var collidingwithwall: bool
 var Target: Vector3
-
-var _gravityForce := 1
-#var Velocity : Vector3
+var canFire := true
+var _gravityForce := 0
+var _velocity : Vector3
 var current_velocity : Vector3
 var previous_velocity : Vector3
 
@@ -20,7 +21,7 @@ var is_me : bool
 var current_pos : Vector3
 var previous_pos : Vector3
 var direction : Vector3
-var Speed := 180
+var Speed := 2
 
 signal position_changed
 signal anim_changed
@@ -33,7 +34,7 @@ var current_anim : String
 var current_color : Color
 var this_player_color
 func _ready() -> void:
-
+	collidingwithwall = false
 	
 	position_changed.connect(on_position_changed)
 	anim_changed.connect(on_anim_changed)
@@ -61,17 +62,17 @@ func _process(delta: float) -> void:
 	
 	if is_me:
 		get_parent().get_node("Camera3D").playerTarget = position
-		velocity = (Vector3(get_parent().get_node("JoyStick").joy_direction.x ,-_gravityForce,get_parent().get_node("JoyStick").joy_direction.y)) * delta * Speed
+		_velocity = (Vector3(get_parent().get_node("JoyStick").joy_direction.x ,-_gravityForce,get_parent().get_node("JoyStick").joy_direction.y))
 		
 		#
 
-		if velocity.length() > 0:
-			move_and_slide()
+		if _velocity.length() > 0 and !collidingwithwall:
+			move_and_collide( _velocity  * delta * Speed)
 			if Target != global_transform.origin:
-				Target =  global_transform.origin + velocity
-				look_at_direction(velocity)
+				Target =  global_transform.origin + _velocity
+				look_at_direction(_velocity)
 		
-		if velocity.length() > 0:
+		if _velocity.length() > 0:
 			if current_anim != anims[1]:
 				current_anim = anims[1]
 				
@@ -149,12 +150,11 @@ func set_color(color):
 func set_index(index):
 	
 	thisPlayerIndex = index
-	position_spawned.emit(on_position_spawn)
+	
 	print(name + "index: " + str(thisPlayerIndex))
 	return thisPlayerIndex
 	
-func on_position_spawn():
-	position = sp_positions[thisPlayerIndex]
+
 
 
 func look_at_direction(direction : Vector3):
@@ -170,7 +170,10 @@ func look_at_direction(direction : Vector3):
 	
 
 func on_fire(direction):
-	if is_me:
+	
+	if is_me and canFire:
+		$FireTimer.start(2)
+		canFire = false
 		var bullet = preload("res://scenes/gr_bullet.tscn").instantiate()
 		bullet.position = $KixMax/bulletspawn.global_transform.origin
 		bullet.whoFired_id = Singelton.PeerId
@@ -197,3 +200,28 @@ func get_fire_info(direction, materialindex , whofiredId):
 		get_parent().add_child(bullet , true)
 		look_at_direction(direction)
 		
+
+
+func _on_fire_timer_timeout() -> void:
+	canFire = true
+
+func takeDamage(amount):
+	health -= amount
+	if health <= 0:
+		if is_me:
+			this_player_dead.rpc_id(1)
+
+	
+	
+@rpc("authority")
+func Damaged(playerId):
+	if playerId == Singelton.PeerId:
+		takeDamage(500)
+		
+	else:
+		get_parent().get_node("Player_"+str(playerId)).takeDamage(500)
+
+
+@rpc("any_peer")
+func this_player_dead():
+	pass

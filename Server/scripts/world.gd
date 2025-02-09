@@ -3,7 +3,7 @@ extends Node3D
 var _Colors = [Color.RED , Color.HOT_PINK , Color.GREEN , Color.YELLOW]
 var PlayersIds : Array
 var PlayersColors: Array
-
+var Usernames : Dictionary
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -20,7 +20,7 @@ func _ready() -> void:
 		
 
 
-		spawn_players.rpc_id(id)
+		spawn_players.rpc_id(id , Usernames)
 		colors_selected.rpc_id(id , PlayersColors)
 
 		add_child(_p , true)
@@ -31,5 +31,13 @@ func _ready() -> void:
 func colors_selected(colorsarray):
 	pass
 @rpc("authority")
-func spawn_players():
+func spawn_players(_Usernames):
 	pass
+
+@rpc("authority")
+func match_result(playerloseId):
+	pass
+
+@rpc("any_peer")
+func remove_this_world():
+	queue_free()

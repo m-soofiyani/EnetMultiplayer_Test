@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://cal06kkejufyk"]
+
+[node name="particles" type="Node3D"]
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="."]
+
+[node name="CSGSphere3D" type="CSGSphere3D" parent="GPUParticles3D"]

@@ -5,6 +5,7 @@ var server_peer : ENetMultiplayerPeer
 var ConnectedPlayers = []
 signal playerDisconnect
 var ReadyForMatchIds : Array
+var usernames : Dictionary
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	
@@ -43,20 +44,25 @@ func spawn_world(ids : Array):
 	$Matches.add_child(world , true)
 	world.PlayersIds = ids
 
+		
+
 @rpc("authority")
 func get_ids(ids):
 	pass
 @rpc("any_peer")
-func On_Ready_For_Match():
+func On_Ready_For_Match(username):
+	usernames[str(multiplayer.get_remote_sender_id())] = username
 	ReadyForMatchIds.append(multiplayer.get_remote_sender_id())
 	if ReadyForMatchIds.size() == 2:
 		var _ids = [ReadyForMatchIds[0] , ReadyForMatchIds[1]]
 		
 		var world = preload("res://scenes/world.tscn").instantiate()
+		
 		$Matches.add_child(world , true)
 		world.PlayersIds = _ids
 		for id in _ids:
+			world.Usernames = usernames
 			get_ids.rpc_id(id , _ids)
 			spawn_world.rpc_id(id , _ids)
 			
-		ReadyForMatchIds.clear()	
+		ReadyForMatchIds.clear()

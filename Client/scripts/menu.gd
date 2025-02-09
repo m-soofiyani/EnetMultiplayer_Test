@@ -29,12 +29,20 @@ func get_ids(ids):
 			Singelton.myIndex = i
 	
 @rpc("any_peer")
-func On_Ready_For_Match():
+func On_Ready_For_Match(username):
 	pass
 
 func _on_button_button_up() -> void:
-	On_Ready_For_Match.rpc_id(1)
-
+	if $VBoxContainer/LineEdit.text.is_empty():
+		Singelton.Username = str(multiplayer.get_unique_id())
+		
+	else:
+		Singelton.Username = $VBoxContainer/LineEdit.text
+		
+	On_Ready_For_Match.rpc_id(1 , Singelton.Username)
+	get_node("connection").message = "Searching for Players!"
+	$VBoxContainer/Button.disabled = true
+	
 
 @rpc("authority")
 func spawn_world(ids : Array):
