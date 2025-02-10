@@ -39,13 +39,21 @@ func spawn_players(_Usernames):
 
 @rpc("authority")
 func match_result(playerloseId):
+	var result_ui = preload("res://scenes/match_result.tscn").instantiate()
+	add_child(result_ui)
 	print(str(playerloseId) + " loosed")
+	$JoyStick.disable_process()
+	$BulletJoyStick.disable_process()
+	$JoyStick.hide()
+	$BulletJoyStick.hide()
+	result_ui.get_node("XButton").button_up.connect(_on_x_button_up)
 	if playerloseId == multiplayer.get_unique_id():
-		$Control/loselabel.show()
-		$Control/X.show()
+		result_ui.get_node("LOSELBL").show()
+		result_ui.get_node("XButton").show()
+		
 	else:
-		$Control/winlabel.show()
-		$Control/X.show()
+		result_ui.get_node("WINLBL").show()
+		result_ui.get_node("XButton").show()
 
 
 func _on_x_button_up() -> void:

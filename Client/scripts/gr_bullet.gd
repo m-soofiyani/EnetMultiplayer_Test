@@ -1,10 +1,10 @@
-extends RigidBody3D
+extends Area3D
 
 
 const SPEED = 5
 var VELOCITY :Vector3
 @export var materials : Array[StandardMaterial3D]
-var this_bullet_material_index = null
+var this_bullet_material_index = -1
 var this_bullet_material
 var whoFired_id : int
 var damagable := true
@@ -18,19 +18,15 @@ signal bullet_hitted
 func _ready() -> void:
 	position_changed.connect(on_position_changed)
 	bullet_hitted.connect(on_bullet_hitted)
-	if this_bullet_material_index != null:
-		$CSGSphere3D.material_override = materials[this_bullet_material_index]
-	else:
-		this_bullet_material = materials.pick_random()
-		$CSGSphere3D.material_override = this_bullet_material
-		this_bullet_material_index = materials.rfind(this_bullet_material)
-	VELOCITY *= SPEED
-	if whoFired_id == Singelton.PeerId:
-		apply_impulse(VELOCITY)
+	
+	$CSGSphere3D.material_override = materials[this_bullet_material_index]
+
+	
+
 
 
 func _physics_process(delta: float) -> void:
-	
+	position += VELOCITY * delta * SPEED
 	for p in get_parent().get_children():
 		if p.name.begins_with("Player"):
 			if global_transform.origin.distance_to(p.global_transform.origin) < bulletThereshold and damagable:
@@ -76,3 +72,11 @@ func this_bullet_deleted():
 @rpc("any_peer")
 func bullet_hitted_to(toPlayerid):
 	pass
+
+
+
+
+func _on_body_shape_entered(body_rid: RID, body: Node3D, body_shape_index: int, local_shape_index: int) -> void:
+	if body.name == "StaticBody3D" :
+		bullet_hitted_to.rpc_id(1 ,0)
+		

@@ -1,0 +1,12 @@
+[gd_scene load_steps=3 format=3 uid="uid://bc3y17m3emqof"]
+
+[ext_resource type="Material" uid="uid://dxe3i6fad4aga" path="res://materials/targeting.tres" id="1_rytl6"]
+
+[sub_resource type="QuadMesh" id="QuadMesh_yn177"]
+
+[node name="Targeting" type="Node3D"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.2, 0, 0, 0, -2.62268e-08, 1, 0, -0.6, -4.37114e-08, 0, 0.05, -0.3)
+material_override = ExtResource("1_rytl6")
+mesh = SubResource("QuadMesh_yn177")

@@ -9,8 +9,7 @@
 [sub_resource type="SphereShape3D" id="SphereShape3D_13du5"]
 radius = 0.0436862
 
-[node name="GR_Bullet" type="RigidBody3D"]
-gravity_scale = 0.0
+[node name="GR_Bullet" type="Area3D"]
 script = ExtResource("1_s5w54")
 materials = Array[StandardMaterial3D]([ExtResource("2_85b1g"), ExtResource("3_3o3n6"), ExtResource("4_y1s1c"), ExtResource("1_ln0op")])
 
@@ -27,9 +26,4 @@ radius = 0.0421871
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("SphereShape3D_13du5")
 
-[node name="bulletarea" type="Area3D" parent="."]
-
-[node name="CollisionShape3D2" type="CollisionShape3D" parent="bulletarea"]
-shape = SubResource("SphereShape3D_13du5")
-
-[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_shape_entered" from="." to="." method="_on_body_shape_entered"]

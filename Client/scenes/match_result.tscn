@@ -1,0 +1,47 @@
+[gd_scene format=3 uid="uid://dvq8mlrwcapgf"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="WINLBL" type="Label" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.095, 0.95, 0, 1)
+theme_override_font_sizes/font_size = 150
+text = "You win!"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="LOSELBL" type="Label" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.78, 0, 0, 1)
+theme_override_font_sizes/font_size = 150
+text = "You lose!"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="XButton" type="Button" parent="."]
+visible = false
+layout_mode = 1
+offset_left = 2300.0
+offset_top = 57.0
+offset_right = 2511.0
+offset_bottom = 250.0
+theme_override_font_sizes/font_size = 100
+text = "X"

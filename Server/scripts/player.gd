@@ -34,12 +34,13 @@ func get_fire_info(direction, materialindex , whofiredId):
 @rpc("any_peer")
 func send_fire_info(direction, materialindex , whofiredId , bulletname):
 	var bullet = preload("res://scenes/gr_bullet.tscn").instantiate()
-	bullet.name = bulletname
-	get_parent().add_child(bullet)
 	
-	for id in multiplayer.get_peers():
+	get_parent().add_child(bullet , true)
+	if bullet.name != bulletname:
+		bullet.name = bulletname
+	for id in get_parent().PlayersIds:
 		if id!= multiplayer.get_remote_sender_id():
-			get_fire_info.rpc_id(id , direction , materialindex , whofiredId)
+			get_fire_info.rpc_id(id , direction , materialindex , whofiredId , bulletname)
 
 @rpc("authority")
 func Damaged(playerId):

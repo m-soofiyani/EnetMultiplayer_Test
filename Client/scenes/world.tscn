@@ -1,9 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://b1n16k5vdnn2o"]
+[gd_scene load_steps=8 format=3 uid="uid://b1n16k5vdnn2o"]
 
 [ext_resource type="Script" path="res://scripts/world.gd" id="1_p5ysw"]
 [ext_resource type="PackedScene" uid="uid://8j85plwqab6l" path="res://scenes/JoyStick.tscn" id="2_i67nn"]
 [ext_resource type="PackedScene" uid="uid://dxn0vy0qflmb8" path="res://scenes/platform.tscn" id="3_prifp"]
 [ext_resource type="Script" path="res://scripts/camera_3d.gd" id="3_tlj3u"]
+[ext_resource type="Script" path="res://scripts/starttimer.gd" id="5_jfblg"]
 
 [sub_resource type="Sky" id="Sky_p5kpd"]
 
@@ -37,50 +38,22 @@ shadow_enabled = true
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_nlj24")
 
-[node name="Control" type="Control" parent="."]
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+[node name="Timer" type="Timer" parent="."]
+wait_time = 4.0
+autostart = true
+script = ExtResource("5_jfblg")
 
-[node name="winlabel" type="Label" parent="Control"]
-visible = false
-layout_mode = 1
+[node name="Label" type="Label" parent="Timer"]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_colors/font_color = Color(0.095, 0.95, 0, 1)
-theme_override_font_sizes/font_size = 150
-text = "You win!"
+theme_override_colors/font_color = Color(0.995014, 0.993688, 0.994568, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 75
+theme_override_font_sizes/font_size = 250
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="loselabel" type="Label" parent="Control"]
-visible = false
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_colors/font_color = Color(0.78, 0, 0, 1)
-theme_override_font_sizes/font_size = 150
-text = "You lose!"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="X" type="Button" parent="Control"]
-visible = false
-layout_mode = 1
-offset_left = 2300.0
-offset_top = 57.0
-offset_right = 2511.0
-offset_bottom = 250.0
-theme_override_font_sizes/font_size = 100
-text = "X"
-
-[connection signal="button_up" from="Control/X" to="." method="_on_x_button_up"]
+[connection signal="timeout" from="Timer" to="Timer" method="_on_timeout"]

@@ -3,12 +3,16 @@ extends Node2D
 @export var joy_direction : Vector2
 @export var ismoving : bool
 @export var LeftOrRight :type
+var targeting : bool
 enum type {
 	left,
 	right
 }
-
 signal fire(direction)
+signal target
+func _ready() -> void:
+	targeting = false
+
 func _input(event):
 	
 	#if event is InputEventScreenTouch and event.is_pressed():
@@ -26,6 +30,9 @@ func _input(event):
 				
 		if LeftOrRight == type.right:
 			if event.position.x > 2560/2:
+				if !targeting:
+					targeting = true
+					target.emit()
 				var origin = $Joyframe.position
 					
 				var distance = origin.distance_to((event.position - self.position))
@@ -37,9 +44,14 @@ func _input(event):
 	
 	elif event is InputEventScreenTouch and event.is_released():
 		
+		if target:
+			targeting = false
 		$Joyframe/Joy.position = Vector2.ZERO
 		if joy_direction != Vector2.ZERO:
 			fire.emit(joy_direction)
 		joy_direction = Vector2.ZERO
 		ismoving = false
 		
+
+func disable_process():
+	set_process_input(false)
